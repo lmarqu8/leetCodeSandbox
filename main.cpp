@@ -7,42 +7,67 @@ using namespace std;
 
 class Solution {
 public:
-    int removeDuplicates(vector<int>& nums) {
-        if (nums.size() == 0){
-            return 0;
-        }
-        cout<< nums.size() << "\n";
-        int x = nums.at(0);
-        int k = 0;
-        for (int i = 1; i < nums.size(); i++) {
-            cout<< x << "=" << nums.at(i) << '\n';
+    bool isValid(string s) {
 
-            if(nums.at(i) == x){
-                nums.erase(nums.begin()+i);
-                i-=1;
+        if(s.size() < 2) return false;
+        std::cout << "past initial condition" << std::endl;
+
+        std::vector<char> stack;
+
+        for(int i = 0; i < s.size(); i++){
+
+
+            if(validIN(s.at(i))){
+                stack.push_back(s.at(i));
             }
-            x = nums.at(i);
+            else if (validOOUT(s.at(i))){
+                if (!stack.empty() && stack.at(stack.size()-1) == alternate(s.at(i))){
+                    stack.pop_back();
+                }
+                else return false;
+            }
+
+            if (!stack.empty()) std::cout << stack.at(stack.size()-1) << std::endl;
 
 
         }
-        cout<< "end \n";
-        for( int a = 0; a < nums.size(); a++){
-            cout << nums.at(a) << " ";
-        }
-        cout << '\n';
-        return nums.size();
+        if (!stack.empty()) return false;
+        return true;
+    }
 
+    bool validIN(char x){
+        if(x == '(' || x == '{' || x == '[') return true;
+        else return false;
+    }
+
+    bool validOOUT(char x){
+        if(x == ')' || x == '}' || x == ']') return true;
+        else return false;
+    }
+
+    char alternate(char x){
+        if (x == '(') return ')';
+        if (x == ')') return '(';
+        if (x == '{') return '}';
+        if (x == '}') return '{';
+        if (x == '[') return ']';
+        if (x == ']') return '[';
+        return NULL;
     }
 };
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
     Solution x;
-    vector<int> nums = {0,0,1,1,1,2,2,3,3,4};
 
-    cout << "\n";
+    string s1 = "()";
+    string s2 = "(){}{}";
+    string s3 = "(}";
+    string s4 = "([)]";
+    string s5 = "{()}";
 
-    cout << x.removeDuplicates(nums) << " ";
+    cout << x.isValid(s5) << std::endl;
+
 
     return 0;
 }
