@@ -7,52 +7,19 @@ using namespace std;
 
 class Solution {
 public:
-    bool isValid(string s) {
+    bool isPalindrome(int x) {
 
-        if(s.size() < 2) return false;
-        std::cout << "past initial condition" << std::endl;
+        if(x < 0) return false;
 
-        std::vector<char> stack;
+        string z = to_string(x);
+        string y = z;
+        reverse(y.begin(), y.end());
 
-        for(int i = 0; i < s.size(); i++){
-
-
-            if(validIN(s.at(i))){
-                stack.push_back(s.at(i));
-            }
-            else if (validOOUT(s.at(i))){
-                if (!stack.empty() && stack.at(stack.size()-1) == alternate(s.at(i))){
-                    stack.pop_back();
-                }
-                else return false;
-            }
-
-            if (!stack.empty()) std::cout << stack.at(stack.size()-1) << std::endl;
-
-
+        if(z == y){
+            return true;
         }
-        if (!stack.empty()) return false;
-        return true;
-    }
+        return false;
 
-    bool validIN(char x){
-        if(x == '(' || x == '{' || x == '[') return true;
-        else return false;
-    }
-
-    bool validOOUT(char x){
-        if(x == ')' || x == '}' || x == ']') return true;
-        else return false;
-    }
-
-    char alternate(char x){
-        if (x == '(') return ')';
-        if (x == ')') return '(';
-        if (x == '{') return '}';
-        if (x == '}') return '{';
-        if (x == '[') return ']';
-        if (x == ']') return '[';
-        return NULL;
     }
 };
 
@@ -60,13 +27,14 @@ int main() {
     std::cout << "Hello, World!" << std::endl;
     Solution x;
 
-    string s1 = "()";
-    string s2 = "(){}{}";
-    string s3 = "(}";
-    string s4 = "([)]";
-    string s5 = "{()}";
+    int a = 121;
+    int b = -121;
+    int c = 10;
+    int d = -101;
 
-    cout << x.isValid(s5) << std::endl;
+    cout << x.isPalindrome(c) << std::endl;
+
+
 
 
     return 0;
